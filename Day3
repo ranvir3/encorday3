@@ -120,6 +120,86 @@ int range e0/0,e0/3
  channel-protocol lacp
  do sh etherchannel summary
 
+LAB2: Always protect fiberports using UDLD(Unidirectional Link Detection):
+Taas:
+conf t
+int g0/1
+ udld port aggressive
+do sh udld
+BABA:
+conf t
+int g0/1
+ udld port aggressive
+do sh udld
+
 Wonderwoman  ->802.1w  ->rapidSTP
+LAB3: Root Guard, BPDU Guard, Loop Guard:
+Taas: RootBridge
+conf t
+ spanning-tree mode rapid-pvst
+ spanning-tree BackBoneFast
+ spanning-tree portfast bpduguard default
+int range fa0/1-8
+ spanning-tree portfast
+ spanning-tree guard root
+end
+Baba:SecondaryRootBridge
+conf t
+ spanning-tree mode rapid-pvst
+ spanning-tree UplinkFast
+ spanning-tree portfast bpduguard default
+int range fa0/1-8
+ spanning-tree portfast
+ spanning-tree guard root
+ spanning-tree bpduguard enable
+int range fa0/10-12
+ !trunkPorts Into:
+ spanning-tree guard loop
+end
+
 Xmen         ->802.1s  ->multipleInstanceSTP
+LAB3: Multiple Instance STP: 802.1s/Mst:
+Step1: Configure VTP: VLANTrunkingProtocol:
+Taas: VTP Server
+conf t
+ vtp domain ccnp
+ vtp password pass
+ vtp mode server
+ vtp version 2
+ exit
+Baba: VTP Client
+conf t
+ vtp domain ccnp
+ vtp password pass
+ vtp mode client
+ vtp version 2
+ exit
+
+Step2: Create many vlans and deploy in diff. cpu instance
+TAAS:
+conf t
+ vlan 11-19
+ exit
+ vlan 21-29
+ exit
+ vlan 31-39
+ exit
+BABA:
+sh vlan br
+
 SuperMan     ->802.1x  ->PortBASEd security
+Step3: Enable superman: 802.1s
+cpu1: vlan 11-19
+cpu2: vlan 21-29
+cpu3: vlan 31-39
+
+TAAS,BABA,D1,D2,A1,A2
+conf t
+ spanning-tree mode Mst
+ spanning-tree mst configuration
+  name supermanstp
+  revision 1
+   instance 1 vlan 11-19
+   instance 2 vlan 21-29
+   instance 3 vlan 31-39
+exit

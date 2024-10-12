@@ -11,3 +11,115 @@ Wireshark or Hugot Method
 
 Step2: Bobo ba ang current network engineer niyo?
 madaling ma-hack
+Yersinia - Kali Linux Flood cdd/Create Trunk
+Proctect Trunk port
+
+Step3: Master STP, Rapid STP and MultipleSTP:
+STP Timers:
+forward delay = 15s
+max age = 15s
+classic states: blk, lis, lrn, fwd:
+
+CCNP RULE1: A health switch is all green
+
+how to get Fired Immediately Commnad:
+kill the expensive feature: STP:
+config t
+ no spanning-tree vlan 1-100
+
+Task1: The five superheroes of CCNP Switch
+Qpid         ->802.1q  ->Trunking
+:Tass/Baba:
+conf t
+ int range fa0/10-12
+ shutdown
+ no shutdown
+ switchport
+ switchport trunk encap dot1Q
+ switchport mode trunk
+ do sh int trunk
+end
+STP normal: every 2s in Wireshark
+:Root Identifier:
+Bobo:32768
+Bangag:28768
+Magaling:24576
+Praning:0
+
+Darna        ->802.1d  ->STP
+Primary/Secondary root bridge:
+Taas:
+conf t
+ spanning-tree mode pvst
+ spanning-tree vlan 1-100 root Primary
+Baba:
+conf t
+ spanning-tree mode pvst
+ spanning-tree vlan 1-100 root Secondary
+
+etherchannel configuration: CCNP Exam Lab
+CiscoProp/Orig/Luma: Port Aggregation Control Protocol: 1992
+LACP: Link Aggregation Control Protocol: 2004
+TAAS:
+conf t
+int range fa0/10-12
+ channel-group 1 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+ do sh int  po1 | inc BW
+
+D1:
+conf t
+int range e0/1-2
+ channel-group 10 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+int range e0/0,e0/3
+ channel-group 20 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+int range e1/2,e1/3
+ channel-group 30 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+
+D2:
+conf t
+int range e0/1-2
+ channel-group 40 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+int range e0/0,e0/3
+ channel-group 10 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+int range e1/2,e1/3
+ channel-group 30 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+
+A1:
+conf t
+int range e0/1-2
+ channel-group 10 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+int range e0/2-3
+ channel-group 40 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+
+A2:
+conf t
+int range e0/1-2
+ channel-group 20 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+int range e0/0,e0/3
+ channel-group 10 mode active
+ channel-protocol lacp
+ do sh etherchannel summary
+
+Wonderwoman  ->802.1w  ->rapidSTP
+Xmen         ->802.1s  ->multipleInstanceSTP
+SuperMan     ->802.1x  ->PortBASEd security

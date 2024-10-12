@@ -104,7 +104,7 @@ int range e0/1-2
  channel-group 10 mode active
  channel-protocol lacp
  do sh etherchannel summary
-int range e0/2-3
+int range e0/3,e1/0
  channel-group 40 mode active
  channel-protocol lacp
  do sh etherchannel summary

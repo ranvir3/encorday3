@@ -1,0 +1,13 @@
+DAY3
+
+Task 0 Master CIDR
+Task 1: Cisco Catalyst Switch vs Nexus SpineLeaf:
+Cisco Catalyst Switch->STP, RSTP, MISTP
+Nexus SpineLEAF-> Cisco ACI
+
+@basic Catalyst SwitchConfig:
+Step1: stp, rstp, mistp?
+Wireshark or Hugot Method
+
+Step2: Bobo ba ang current network engineer niyo?
+madaling ma-hack
